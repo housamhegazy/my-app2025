@@ -13,6 +13,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+
+  font-family: sans-serif;
+
+  text-decoration: none;
+  list-style: none;
+
+  letter-spacing: 1px;
+}
+
+html {
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -24,7 +48,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex; */
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -65,4 +89,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.main-link.active{
+  background-color: #213547;
 }
