@@ -12,6 +12,7 @@ import Home from './pages/home.jsx';
 import Html from './pages/html.jsx';
 import Css from './pages/css.jsx';
 import Error from './pages/Error.jsx';
+import { HelmetProvider } from 'react-helmet-async';
 
 let router = createBrowserRouter([
   {
@@ -31,7 +32,9 @@ let router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </StrictMode>
   
 )
