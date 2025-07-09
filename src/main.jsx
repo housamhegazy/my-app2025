@@ -13,6 +13,7 @@ import Html from './pages/html.jsx';
 import Css from './pages/css.jsx';
 import Error from './pages/Error.jsx';
 import { HelmetProvider } from 'react-helmet-async';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 let router = createBrowserRouter([
   {
@@ -38,3 +39,8 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>
   
 )
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorkerRegistration.register();
+
