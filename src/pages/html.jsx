@@ -1,31 +1,39 @@
-import React from "react";
+import { React, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MainComp from "../components/MainComp";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/config";
+import LoadingSpinner from "./LoadingPage";
+
 const Html = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    !user && !loading && navigate("/signin");
+  }, [user]);
+
   return (
     <>
-    <Helmet>
+      <Helmet>
         <meta name="description" content="the page of html codes" />
         <link rel="icon" type="image/png" href="./public/suit.png" />
         <title>Html Page</title>
-
-        {/* <style type="text/css">
-          {
-            `
-            main{
-            color:red
-            }
-            `
-          }
-        </style> */}
       </Helmet>
-      <Header />
-      {/* Main content */}
-      <MainComp pageName="Html page" color={"green"}/>
-      {/* Footer */}
-      <Footer />
+
+      {loading && <LoadingSpinner />}
+      {user && (
+        <>
+          <Header />
+          {/* Main content */}
+          <MainComp pageName="Html page" color={"green"} />
+          {/* Footer */}
+          <Footer />
+        </>
+      )}
     </>
   );
 };

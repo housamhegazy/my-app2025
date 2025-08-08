@@ -1,12 +1,21 @@
 header {
-  background-color: #1b1b1b;
+  background-color: #a34545;
+  align-items: center;
 }
 
-h1 {
+.dark header {
+  background-color: #242c31;
+  color: aliceblue;
+}
+header h1 {
   padding: 20px;
+  
+}
+
+header .logo a{
+  color:aliceblue;
   font-size: 25px;
 }
-
 /* ===============
    1.  ul class .flex
 ================ */
@@ -74,7 +83,21 @@ h1 {
 .main-list:hover .sub-ul {
   display: block;
 }
-
+li a {
+  color: aliceblue;
+}
+.dark .fa-moon {
+  display: none;
+}
+.light .fa-sun {
+  display: none;
+}
+.fa-moon {
+  color: #1b1b1b;
+}
+.light .theme-btn{
+  background-color: aliceblue !important;
+}
 /* =======================================
    1.2 sub sub of CSS
 ======================================== */
@@ -83,16 +106,11 @@ h1 {
   position: absolute;
   top: 80px;
   left: 153px;
-
   border-top: 1px solid cyan;
-
   background-color: #1b1b1b;
-
   border-radius: 5px;
   padding: 5px;
-
   width: 150px;
-
   display: none;
 }
 
@@ -107,117 +125,107 @@ h1 {
   display: none;
 }
 
-@media (max-width : 600px) {
-  
+@media (max-width: 600px) {
   .show-when-mobile {
-  display: block;
-}
+    display: block;
+  }
 
-.hide-when-mobile {
-  display: none;
-}
+  .hide-when-mobile {
+    display: none;
+  }
 
-/* ====================================
+  /* ====================================
     1. Font Awesom hamburger menu
 ======================================= */
-.absolute {
-  position: absolute;
-  top: 0;
-  right: 10px;
-}
+  .absolute {
+    position: absolute;
+    top: 0;
+    right: 10px;
+  }
 
-input {
-  display: none;
-}
+  input {
+    display: none;
+  }
 
-.fa-bars {
-  font-size: 30px;
-  transform: scaleX(1.4);
-}
+  .fa-bars {
+    font-size: 30px;
+    transform: scaleX(1.4);
+  }
 
+  .fas {
+    position: absolute;
+    right: 10vw;
+  }
 
-.fas{
-  position: absolute;
-  right: 10vw;
-}
-
-/* ====================================
+  /* ====================================
     2. show on click
 ======================================= */
 
-.show-on-click {
-  display: none;
-  border-top: 2px solid black;
-}
+  .show-on-click {
+    display: none;
+    border-top: 2px solid black;
+  }
 
-#burger:checked + .show-on-click {
-  display: block;
-}
+  #burger:checked + .show-on-click {
+    display: block;
+  }
 
-label{
-  font-size: 22px;
-  /* border: 2px solid red; */
-  display: block;
-  padding: 20px;
-}
+  label {
+    font-size: 22px;
+    /* border: 2px solid red; */
+    display: block;
+    padding: 20px;
+  }
 
-label:hover,
-.fa-bars:hover,
-.sub-div li a:hover,
+  label:hover,
+  .fa-bars:hover,
+  .sub-div li a:hover,
+  label:hover .fas {
+    color: cyan;
+    letter-spacing: 2px;
+  }
 
-label:hover .fas
+  .sub-div li a {
+    display: block;
+  }
 
-{
-  color: cyan;
-  letter-spacing: 2px;
-}
+  .main-div {
+    border-bottom: 2px solid black;
+  }
 
-.sub-div li a{
-  
-  display: block;
-}
-
-.main-div{
-  border-bottom: 2px solid black;
-}
-
-/* ====================================
+  /* ====================================
     3. sub of div
 ======================================= */
 
-.sub-div {
-  display: none;
-}
+  .sub-div {
+    display: none;
+  }
 
-#html:checked + .sub-div,
-#css:checked + .sub-div,
-#js:checked + .sub-div {
-  display: block;
-}
+  #html:checked + .sub-div,
+  #css:checked + .sub-div,
+  #js:checked + .sub-div {
+    display: block;
+  }
 
+  .sub-div li {
+    font-size: 17px;
+    padding: 10px 0 10px 35px;
+  }
 
-.sub-div li{
-  font-size: 17px;
-  padding: 10px 0 10px 35px;
-}
-
-
-
-/* ====================================
+  /* ====================================
     3. sub sub of css
 ======================================= */
-.sub-sub-div{
-  display: none;
-  margin-top: 17px;
-}
+  .sub-sub-div {
+    display: none;
+    margin-top: 17px;
+  }
 
-#mini:checked + .sub-sub-div{
-  display: block;
-}
+  #mini:checked + .sub-sub-div {
+    display: block;
+  }
 
-
-.mini-projects{
-  padding: 0;
-  font-size: 17px;
-}
+  .mini-projects {
+    padding: 0;
+    font-size: 17px;
+  }
 }

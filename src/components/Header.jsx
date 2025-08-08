@@ -1,34 +1,93 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import './header.css'
+import "./header.css";
+import "../theme.css";
+import ThemeContexttt from "../context/themeContext";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/config";
+import { getAuth, signOut } from "firebase/auth";
 
 const Header = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const { theme, changeTheme } = useContext(ThemeContexttt);
   return (
     <>
       <header className="hide-when-mobile">
-        <h1> <NavLink to="/">Courses 4 Arab</NavLink> </h1>
+        <h1 className="logo">
+          {" "}
+          <NavLink to="/">Courses 4 Arab</NavLink>{" "}
+        </h1>
+        <button
+          onClick={() => {
+            changeTheme(theme === "light" ? "dark" : "light");
+          }}
+          className="theme-btn"
+        >
+          <i className="fa-solid fa-moon" />
+          <i className="fa-solid fa-sun" />
+        </button>
+
         <ul className="flex">
-          <li className="main-list">
-            <NavLink className="main-link" to="/html">
-              HTML
-            </NavLink>
-          </li>
-          <li className="main-list">
-            <NavLink className="main-link" to="/css">
-              CSS
-            </NavLink>
-          </li>
-          <li className="main-list">
-            <NavLink className="main-link" to="/javascript">
-              JavaScript
-            </NavLink>
-          </li>
+          {!user && (
+            <>
+              <li className="main-list">
+                <NavLink to="/signin"> SignIn</NavLink>
+              </li>
+              <li className="main-list">
+                <NavLink to="/signup"> SignUp</NavLink>
+              </li>
+            </>
+          )}
+
+          {user && (
+            <>
+              <li className="main-list">
+                <NavLink className="main-link" to="/html">
+                  HTML
+                </NavLink>
+              </li>
+              <li className="main-list">
+                <NavLink className="main-link" to="/css">
+                  CSS
+                </NavLink>
+              </li>
+              <li className="main-list">
+                <NavLink className="main-link" to="/javascript">
+                  JavaScript
+                </NavLink>
+              </li>
+              <li className="main-list">
+                {/* sign out  */}
+                <button
+                  onClick={() => {
+                    signOut(auth)
+                      .then(() => {
+                        // Sign-out successful.
+                      })
+                      .catch((error) => {
+                        // An error happened.
+                      });
+                  }}
+                  className="main-link"
+                >
+                  Sign Out
+                </button>
+              </li>
+              <li className="main-list">
+                {/* sign out  */}
+                <NavLink to={"/profile"}>Profile  </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </header>
 
       {/* Header for mobile (hidden on desktop) */}
       <header className="show-when-mobile">
-        <h1> <NavLink href="/">Courses 4 Arab</NavLink> </h1>
+        <h1>
+          {" "}
+          <NavLink href="/">Courses 4 Arab</NavLink>{" "}
+        </h1>
         <label className="absolute" htmlFor="burger">
           <i className="fas fa-bars"></i>
         </label>

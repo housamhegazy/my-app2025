@@ -13,4 +13,7 @@ main{
   text-align: center;
 }
 
+.App.dark main{
+  color: white;
+}
 

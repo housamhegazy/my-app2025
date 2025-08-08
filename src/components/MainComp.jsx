@@ -1,8 +1,8 @@
 import React from 'react';
 import './maincon.css'
-const MainComp = ({pageName , color}) => {
+const MainComp = ({pageName }) => {
   return (
-    <main style={{ color: color}}>{pageName}</main>
+    <main>{pageName}</main>
   );
 }
 
