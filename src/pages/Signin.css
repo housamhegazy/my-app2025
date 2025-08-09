@@ -256,11 +256,17 @@ a.ghost:hover{
   
 
 }
+.dark .reset-box {
+  background-color: #252222;
+}
 .reset-box h3{
   color:#0c0b0b;
   margin: 30px 0;
   font-size: 20px;
 
+}
+.dark .reset-box h3{
+  color: white;
 }
 .reset-box input{
   margin: 30px 0;
@@ -297,6 +303,7 @@ a.ghost:hover{
   color: red;
   font-size: 20px;
   cursor: pointer;
+  
   
 }
 .reset-box.active{

@@ -10,3 +10,7 @@
 .profile button{
   margin-top: 20px;
 }
+
+.light .profile li{
+  color: black;
+}

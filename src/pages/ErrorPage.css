@@ -32,3 +32,9 @@
 .home-link:hover {
   background-color: #e05252;
 }
+.light .not-found-container h2,.light .not-found-container p{
+  color:#333
+}
+/* .dark .not-found-container h2,p{
+  color:white
+} */
