@@ -32,6 +32,71 @@ const Signup = () => {
     }
   });
 
+  //signup function
+  const SignUpFunc = (e) => {
+    e.preventDefault();
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+        sendEmailVerification(auth.currentUser).then(() => {
+          // Email verification sent!
+          // ...
+        });
+
+        //send username
+        updateProfile(auth.currentUser, {
+          displayName: username,
+          // photoURL: "https://example.com/jane-q-user/profile.jpg",
+        })
+          .then(() => {
+            // Profile updated!
+            // ...
+            navigate("/");
+          })
+          .catch((error) => {
+            // An error occurred
+            // ...
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setHasError(true);
+        console.log(errorCode);
+        switch (errorCode) {
+          case "auth/invalid-email":
+            setErrorMsg("wrong email");
+            break;
+
+          case "auth/missing-password":
+            setErrorMsg("password empty");
+            break;
+
+          case "auth/email-already-in-use":
+            setErrorMsg(" email already in use");
+            break;
+
+          case "auth/wrong-password":
+            setErrorMsg("wrong password");
+            break;
+
+          case "auth/invalid-credential":
+            setErrorMsg("incorrect email or password");
+            break;
+
+          case "auth/too-many-requests":
+            setErrorMsg("you can sign in after 2 minutes");
+            break;
+
+          default:
+            setErrorMsg(errorCode);
+        }
+        // ..
+      });
+  };
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -96,69 +161,7 @@ const Signup = () => {
             </div>
             <button
               onClick={(e) => {
-                e.preventDefault();
-
-                createUserWithEmailAndPassword(auth, email, password)
-                  .then((userCredential) => {
-                    // Signed up
-                    const user = userCredential.user;
-                    // ...
-                    sendEmailVerification(auth.currentUser).then(() => {
-                      // Email verification sent!
-                      // ...
-                      
-                    });
-
-                    //send username
-                    updateProfile(auth.currentUser, {
-                      displayName: username,
-                      // photoURL: "https://example.com/jane-q-user/profile.jpg",
-                    })
-                      .then(() => {
-                        // Profile updated!
-                        // ...
-                        navigate("/");
-                      })
-                      .catch((error) => {
-                        // An error occurred
-                        // ...
-                      });
-                  })
-                  .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setHasError(true);
-                    console.log(errorCode);
-                    switch (errorCode) {
-                      case "auth/invalid-email":
-                        setErrorMsg("wrong email");
-                        break;
-
-                      case "auth/missing-password":
-                        setErrorMsg("password empty");
-                        break;
-
-                      case "auth/email-already-in-use":
-                        setErrorMsg(" email already in use");
-                        break;
-
-                      case "auth/wrong-password":
-                        setErrorMsg("wrong password");
-                        break;
-
-                      case "auth/invalid-credential":
-                        setErrorMsg("incorrect email or password");
-                        break;
-
-                      case "auth/too-many-requests":
-                        setErrorMsg("you can sign in after 2 minutes");
-                        break;
-
-                      default:
-                        setErrorMsg(errorCode);
-                    }
-                    // ..
-                  });
+                SignUpFunc(e);
               }}
               type="submit"
               className="submit-btn"

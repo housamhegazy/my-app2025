@@ -3,7 +3,6 @@ import { BrowserRouter } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./pages/home.jsx";
 import Html from "./pages/html.jsx";
-import Css from "./pages/css.jsx";
 import { useContext } from "react";
 import ThemeContexttt from "./context/themeContext.jsx";
 import Singin from "./pages/Singin.jsx";
@@ -18,10 +17,6 @@ let router = createBrowserRouter([
   {
     path: "/html",
     element: <Html />,
-  },
-  {
-    path: "/css",
-    element: <Css />,
   },
   {
     path: "/signin",

@@ -14,28 +14,41 @@ const Html = () => {
 
   useEffect(() => {
     !user && !loading && navigate("/signin");
-  }, [user]);
+    if(user){
+      if (!user.emailVerified) {
+      navigate("/")
+    }
+    }
+  });
 
-  return (
-    <>
-      <Helmet>
-        <meta name="description" content="the page of html codes" />
-        <link rel="icon" type="image/png" href="./public/suit.png" />
-        <title>Html Page</title>
-      </Helmet>
-
-      {loading && <LoadingSpinner />}
-      {user && (
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+  if (user) {
+    
+    if (user.emailVerified) {
+      return (
         <>
-          <Header />
-          {/* Main content */}
-          <MainComp pageName="Html page" color={"green"} />
-          {/* Footer */}
-          <Footer />
+          <Helmet>
+            <meta name="description" content="the page of html codes" />
+            <link rel="icon" type="image/png" href="./public/suit.png" />
+            <title>Html Page</title>
+          </Helmet>
+
+          {loading && <LoadingSpinner />}
+          {user && (
+            <>
+              <Header />
+              {/* Main content */}
+              <MainComp pageName="Html page" color={"green"} />
+              {/* Footer */}
+              <Footer />
+            </>
+          )}
         </>
-      )}
-    </>
-  );
+      );
+    }
+  }
 };
 
 export default Html;

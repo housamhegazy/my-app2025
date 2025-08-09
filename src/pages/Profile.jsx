@@ -20,17 +20,20 @@ const Profile = () => {
   useEffect(() => {
     {
       !user && !loading && navigate("/signin");
+      if(user){
+        if(!user.emailVerified){
+        navigate("/")
+      }
+      }
     }
-  });
+  },[user]);
 
   if (loading) {
     return <LoadingSpinner />;
   }
 
   if (user) {
-    if(!user.emailVerified){
-      navigate("/")
-    }else{
+    if(user.emailVerified){
       return (
       <>
         <Helmet>
@@ -67,11 +70,14 @@ const Profile = () => {
                 deleteUser(user)
                   .then(() => {
                     // User deleted.
+                    console.log("done")
                     navigate("./");
+
                   })
                   .catch((error) => {
                     // An error ocurred
                     // ...
+                    console.log(error)
                   });
               }}
             >

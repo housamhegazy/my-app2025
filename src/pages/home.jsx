@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import LoadingSpinner from "./LoadingPage";
 import Error from "../components/Error";
+import { sendEmailVerification } from "firebase/auth";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -19,7 +20,6 @@ const Home = () => {
     }
   }, [user]);
 
-  
   if (loading) {
     return (
       <>
@@ -51,7 +51,7 @@ const Home = () => {
       </>
     );
   }
-  if(!user.emailVerified){
+  if (!user.emailVerified) {
     return (
       <>
         <Helmet>
@@ -61,8 +61,20 @@ const Home = () => {
         {/* header  */}
 
         <Header />
-        <main>
-          <h3 style={{ color: "red" }}> please verify your email to see content </h3>
+        <main style={{display:"flex",flexDirection:"column"}}>
+          <div>Hello: {user.displayName}</div>
+
+          <h3 style={{ color: "red" }}>
+            {" "}
+            please verify your email to see content{" "}
+          </h3>
+          <button onClick={()=>{
+            sendEmailVerification(auth.currentUser).then(() => {
+                                  // Email verification sent!
+                                  // ...
+                                  
+                                });
+          }}>send again</button>
         </main>
 
         {/* Footer */}
