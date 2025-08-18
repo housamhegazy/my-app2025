@@ -1,0 +1,158 @@
+/* title  */
+
+.edit-task {
+  height: calc(100vh - 128.64px);
+}
+
+.edit-task .title-input {
+  background-color: transparent; /* خلفية شفافة */
+  border: none; /* إزالة كل الحدود */
+  border-bottom: 2px solid #ccc; /* خط سفلي رمادي فاتح */
+  color: #333; /* لون النص المدخل (أسود) */
+  font-size: 16px; /* حجم الخط */
+  padding: 10px 5px; /* حشوة داخلية */
+  width: 15%; /* عرض الحقل */
+  transition: border-color 0.3s ease-in-out; /* حركة ناعمة عند تغير اللون */
+  font-weight: bold;
+  font-size: 20px;
+}
+.dark .edit-task .title-input {
+  color: white;
+}
+/* تغيير لون الخط السفلي عند التركيز */
+.edit-task .title-input:focus {
+  outline: none; /* إزالة خط التحديد الافتراضي للمتصفح */
+  border-bottom-color: #007bff; /* تغيير لون الخط السفلي إلى الأزرق */
+}
+
+/* تنسيق النص المؤقت (Placeholder) */
+.edit-task .title-input::placeholder {
+  color: #aaa; /* لون رمادي للنص المؤقت */
+  font-style: italic; /* نمط مائل */
+}
+.fa-pen-to-square {
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.fa-pen-to-square:hover {
+  font-size: 20px;
+}
+/* ################################# */
+/* sub task section  */
+/* ################################# */
+.edit-task section.sub-task {
+  border: 2px solid red;
+  max-width: 600px;
+  margin: 50px auto;
+  max-height: 400px;
+  
+}
+.edit-task .sub-task .first-box {
+  justify-content: space-between;
+}
+
+.edit-task .sub-task .first-box .time {
+  font-size: 12px;
+}
+
+/* check box  */
+/* Container */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none; /* لمنع تحديد النص عند النقر */
+}
+
+/* Hide the browser's default checkbox */
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: relative;
+  height: 25px;
+  width: 25px;
+  background-color: #eee; /* لون الخلفية الافتراضي */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-left: 10px; /* لغة عربية: استخدم margin-left أو margin-right حسب اتجاه النص */
+  transition: background-color 0.2s;
+}
+
+/* On mouse-over, add a grey background color */
+.custom-checkbox:hover .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #007bff; /* لون الخلفية عند التفعيل */
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.custom-checkbox .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg); /* يرسم علامة الصح */
+}
+
+.sub-task .card-task {
+  box-shadow: 1px 3px 5px 3px gray;
+  margin: 20px 10px;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 5px;
+  border-radius: 10px;
+}
+.sub-task .card-task i{
+  color:red;
+  cursor: pointer;
+  transition: all .3s;
+}
+.sub-task .card-task i:hover{
+  transform: scale(1.1);
+}
+.sub-task .card-task .card-name{
+  margin: 20px!important;
+}
+.light .sub-task .card-task .card-name{
+  color:black;
+}
+.sub-task .card-task:hover {
+  box-shadow: 0px 6px 14px 2px gray;
+}
+/* add more btn and delete btn  */
+
+.add-more-btn{
+  background-color: green;
+  border-color: green;
+}
+.add-more-btn:hover{
+  border-color: green;
+}

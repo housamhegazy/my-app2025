@@ -1,14 +1,15 @@
 
 import { BrowserRouter } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Home from "./pages/home.jsx";
+import Home from "./pages/home/home.jsx";
 import Html from "./pages/html.jsx";
 import { useContext } from "react";
 import ThemeContexttt from "./context/themeContext.jsx";
-import Singin from "./pages/Singin.jsx";
-import Signup from "./pages/Signup.jsx";
-import Profile from "./pages/Profile.jsx";
-import ErrorPage from "./pages/ErrorPage.jsx";
+import Singin from "./pages/signin/Singin.jsx";
+import Signup from "./pages/signup/Signup.jsx";
+import Profile from "./pages/profile/Profile.jsx";
+import ErrorPage from "./pages/error/ErrorPage.jsx";
+import EditTask from "./pages/edit tasks/EditTask.jsx";
 let router = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +18,10 @@ let router = createBrowserRouter([
   {
     path: "/html",
     element: <Html />,
+  },
+  {
+    path: "/edittask",
+    element: <EditTask />,
   },
   {
     path: "/signin",

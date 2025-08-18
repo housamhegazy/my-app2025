@@ -5,7 +5,7 @@ import "../theme.css";
 import ThemeContexttt from "../context/themeContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/config";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -46,11 +46,7 @@ const Header = () => {
                   HTML
                 </NavLink>
               </li>
-              <li className="main-list">
-                <NavLink className="main-link" to="/css">
-                  CSS
-                </NavLink>
-              </li>
+              
               <li className="main-list">
                 <NavLink className="main-link" to="/javascript">
                   JavaScript

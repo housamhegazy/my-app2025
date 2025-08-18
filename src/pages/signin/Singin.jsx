@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import "./Signin.css";
@@ -8,12 +8,14 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { auth } from "../../firebase/config";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LoadingSpinner from "./LoadingPage";
+import LoadingSpinner from "../loading/LoadingPage";
+import Modal from "../../shared/modal";
+
 
 const Singin = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -26,14 +28,13 @@ const Singin = () => {
   const [restEmail, setResetEmail] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
   const [failedMsg, setFailedMsg] = useState(false);
-  const [activeBx, setActiveBx] = useState("");
 
   const [password, setPassword] = useState("");
   useEffect(() => {
     {
       user && !loading && navigate("/");
     }
-  }, [user]);
+  });
 
   //signin function
   const SignInFunc = (e) => {
@@ -99,11 +100,17 @@ const Singin = () => {
         setSuccessMsg(false);
       });
   };
+  //open modal
+  const OpenModal = () => {
+    setshowbox(true);
+  };
+  
   //loading
   if (loading) {
     return <LoadingSpinner />;
   }
   //!user
+
   if (!user) {
     return (
       <>
@@ -138,8 +145,7 @@ const Singin = () => {
                 {/* reset email password  */}
                 <a
                   onClick={() => {
-                    setshowbox(true);
-                    setActiveBx("active");
+                    OpenModal();
                   }}
                   href="#"
                 >
@@ -169,17 +175,9 @@ const Singin = () => {
           </div>
           {/* reset email password box  */}
           {showbox && (
-            <form className={`reset-box ${activeBx}`}>
-              <span
-                className="close"
-                onClick={() => {
-                  setshowbox(false);
-                  setActiveBx("");
-                }}
-              >
-                X
-              </span>
-              <h3>Reset password </h3>
+            <Modal
+              title={"Reset Password"}
+              modalclass={"reset-box"} setshowbox={setshowbox}            >
               <input
                 onChange={(e) => {
                   setResetEmail(e.target.value);
@@ -199,9 +197,10 @@ const Singin = () => {
               {failedMsg && (
                 <p style={{ color: "red" }}> something went wrong </p>
               )}
-            </form>
+            </Modal>
           )}
         </main>
+
         {/* Footer */}
         <Footer />
       </>

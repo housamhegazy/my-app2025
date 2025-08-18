@@ -1,0 +1,209 @@
+/* ############################## */
+/* buttons section  */
+/* ################################ */
+.light .home .welcome {
+  color: black;
+}
+.home {
+  display: flex;
+  flex-direction: column;
+}
+/* الحاوية المخصصة للقائمة */
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 280px; /* يمكنك تغيير العرض حسب الحاجة */
+}
+
+/* تصميم المظهر الخارجي الذي يراه المستخدم */
+.custom-select-wrapper::after {
+  content: "▼"; /* رمز السهم للأسفل */
+  font-size: 14px;
+  color: #888;
+  position: absolute;
+  top: 50%;
+  left: 20px; /* تعديل ليتناسب مع RTL */
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+  pointer-events: none; /* لمنع السهم من اعتراض نقرات الفأرة */
+}
+
+/* تدوير السهم عند التركيز */
+.custom-select-wrapper:focus-within::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* تصميم عنصر select الفعلي */
+select#cars-select {
+  /* إزالة المظهر الافتراضي للمتصفح */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* التصميم المخصص */
+  width: 100%;
+  padding: 12px 40px 12px 20px;
+  font-size: 16px;
+  color: #333;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* إزالة خط التحديد الافتراضي */
+select#cars-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* تصميم الخيارات داخل القائمة */
+select#cars-select option {
+  padding: 10px;
+  font-size: 16px;
+}
+.orderbtn,
+button.add-new-task {
+  background-color: #3e993e;
+  border-color: #3e993e;
+}
+
+.orderbtn:hover,
+.orderbtn:focus,
+button.add-new-task:hover,
+button.add-new-task:focus {
+  border-color: #3e993e;
+}
+.custom-select-wrapper #cars-select {
+  background-color: #3e993e;
+}
+.orderbtn {
+  margin: 10px;
+}
+/* ############################## */
+/* tasks section  */
+/* ################################ */
+.home .tasks-section {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  justify-content: center;
+}
+
+.home .tasks-section .one-task {
+  position: relative;
+  margin: 10px 20px;
+  background-color: cadetblue;
+  border-radius: 10px;
+  padding: 10px;
+  padding-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  /* --- التعديل هنا: إضافة حركة ناعمة للحاوية --- */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+.home .tasks-section .one-task:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.home h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+/* تنسيق الحاوية الرئيسية للقائمة */
+.list {
+  list-style: none; /* إزالة النقاط الافتراضية */
+  padding: 0;
+  width: 350px; /* عرض القائمة */
+}
+
+/* تنسيق كل عنصر في القائمة */
+.list li {
+  /* background-color: #ffffff; */
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* تأثير عند مرور الفأرة فوق العنصر */
+.list li:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* إضافة أيقونة مخصصة قبل النص */
+.list li::before {
+  content: "📝"; /* أيقونة قلم */
+  margin-left: 15px; /* مسافة بين الأيقونة والنص */
+  font-size: 20px;
+}
+
+/* تنسيق خاص للعنصر الثاني (كمثال) */
+.list li:nth-child(2)::before {
+  content: "✅"; /* أيقونة علامة صح */
+}
+
+.home .tasks-section .one-task .time {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+}
+/* ############################## */
+/* add new task section  */
+/* ################################ */
+
+.add-new-task {
+  margin-bottom: 30px;
+}
+
+.home .add-task-modal div {
+  width: 100%;
+  text-align: left;
+  padding: 0px 20px;
+  margin: 20px 0;
+}
+.home .add-task-modal input {
+  margin: 0px 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  padding: 12px 15px;
+  /* width: 70%; */
+  box-sizing: border-box;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.home .tasks-table {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 10px 20px;
+  list-style: circle;
+  font-size: 15px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.home .tasks-table li {
+  list-style: circle;
+  margin: 10px;
+  background-color: #3d3a3a;
+  width: 100%;
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+.home .tasks-table li:hover {
+  scale: 1.1;
+}

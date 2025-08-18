@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet-async";
 import "./Signup.css";
-import { auth } from "../firebase/config";
+import { auth } from "../../firebase/config";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 import { updateProfile } from "firebase/auth";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LoadingSpinner from "./LoadingPage";
+import LoadingSpinner from "../loading/LoadingPage";
 // import { getAuth, sendEmailVerification } from "firebase/auth";
 
 const Signup = () => {

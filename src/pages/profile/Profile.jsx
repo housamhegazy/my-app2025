@@ -1,15 +1,15 @@
 import { React, useEffect } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/config";
-import { format, formatDistanceToNow } from "date-fns";
+import { auth } from "../../firebase/config";
+import { formatDistanceToNow } from "date-fns";
 import { arSA } from "date-fns/locale"; // Import Arabic locale
 import { enUS } from "date-fns/locale";
-import LoadingSpinner from "./LoadingPage";
-import Error from "../components/Error";
+import LoadingSpinner from "../loading/LoadingPage";
+import Error from "../../components/Error";
 import { deleteUser } from "firebase/auth";
 import "./Profile.css";
 

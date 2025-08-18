@@ -25,9 +25,6 @@ header .logo a{
   justify-content: space-around;
 }
 
-.flex {
-  display: flex;
-}
 
 .main-list {
   padding: 20px;

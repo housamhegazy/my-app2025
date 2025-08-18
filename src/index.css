@@ -12,7 +12,25 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.flex {
+  display: flex;
+  align-items: center;
+}
+#root {
+  width: 100%;
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+}
 
+.App{
+  width: 100%;
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+  background-color: aliceblue;
+  
+}
 * {
   margin: 0;
   padding: 0;
@@ -23,8 +41,27 @@
   text-decoration: none;
   list-style: none;
 
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
 }
+/* ==================
+    2. main & footer
+===================== */
+main{
+  color: #1b1b1b;
+  min-height: calc(100vh - 128.64px);
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.App.dark main{
+  color: white;
+}
+
 
 html {
   box-sizing: border-box;
@@ -93,4 +130,25 @@ button:focus-visible {
 
 .main-link.active{
   background-color: #213547;
+}
+
+.mt{
+  margin-top: 1em;
+}
+.mtt{
+  margin-top: 2em;
+}
+.mttt{
+  margin-top: 3em;
+}
+
+.center{
+  text-align: center;
+}
+.greenBtn{
+  background-color: green;
+  border-color: green;
+}
+.greenBtn:hover,.greenBtn:focus{
+  border-color: green;
 }
