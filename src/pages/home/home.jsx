@@ -11,15 +11,19 @@ import Error from "../../components/Error";
 import { sendEmailVerification } from "firebase/auth";
 import "./Home.css";
 import Modal from "../../shared/modal";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
+import { Oval } from "react-loader-spinner";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
   const [showbox, setshowbox] = useState(false);
-  const [taskTitle , setTaskTitle] = useState("")
-  const [items , setItems] = useState([]);
-  const [inputValue , setInputValue] = useState("")
+  const [taskTitle, setTaskTitle] = useState("");
+  const [items, setItems] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [showPopUpMsg, setPopUpMsg] = useState(false);
+  const [errorMsg,seterrorMsg] = useState(false)
   useEffect(() => {
     {
       !user && !loading && navigate("/signin");
@@ -27,15 +31,18 @@ const Home = () => {
   });
 
   const handleAddItem = () => {
-  // Check if the input value is not empty
-  if (inputValue.trim() !== '') {
-    // Use the spread operator to create a new array
-    const newItems = [...items, inputValue];
-    setItems(newItems);
-    // Clear the input field
-    setInputValue('');
-  }
-};
+    // Check if the input value is not empty
+    if (inputValue.trim() !== "") {
+      // Use the spread operator to create a new array
+      const newItems = [...items, inputValue];
+      setItems(newItems);
+      // Clear the input field
+      setInputValue("");
+      if(items.length === 0 ){
+        seterrorMsg(false);
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -157,21 +164,21 @@ const Home = () => {
               title={"add new task"}
               modalclass={"add-task-modal"}
             >
-              <div style={{ textAlign: "left" }}>
-              {/* add title  */}
+              <div className="input-field" style={{ textAlign: "left" }}>
+                {/* add title  */}
                 <input
-                value={taskTitle}
+                  value={taskTitle}
                   onChange={(e) => {
-                    setTaskTitle(e.target.value)
+                    setTaskTitle(e.target.value);
                   }}
                   type="text"
                   placeholder="title"
                 />
               </div>
-              <div style={{ textAlign: "left" }}>
+              <div className="input-field" style={{ textAlign: "left" }}>
                 <input
                   onChange={(e) => {
-                    setInputValue(e.target.value)
+                    setInputValue(e.target.value);
                   }}
                   value={inputValue}
                   type="text"
@@ -180,7 +187,8 @@ const Home = () => {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAddItem()                
+                    handleAddItem();
+                    
                   }}
                   className="greenBtn"
                 >
@@ -188,33 +196,66 @@ const Home = () => {
                 </button>
               </div>
               {/* tasks table  */}
-              {items && <ul className="tasks-table">
-                {items.map((a,index)=>{
-                  return(
-                    <li key={index}>{a}</li>
-                  )
-                })}
-              </ul>}
-              
+              {items && (
+                <ul className="tasks-table">
+                  {items.map((a, index) => {
+                    return <li key={index}>{a}</li>;
+                  })}
+                </ul>
+              )}
+
               <button
                 onClick={async (e) => {
                   e.preventDefault();
-                  // Add a new document in collection "cities"
-                  const taskId = new Date().getTime()
-                  await setDoc(doc(db, user.uid, `${taskId}`), {
-                  title: taskTitle,
-                  id: taskId,
-                  tasks: items
-                });
-                setItems([])
-                setTaskTitle("")
-                                }}
+                  // Add a new document in collection "user.uid"
+                  if (items.length > 0) {
+                    setShowSpinner(true);
+                    const taskId = new Date().getTime();
+                    await setDoc(doc(db, user.uid, `${taskId}`), {
+                      title: taskTitle,
+                      id: taskId,
+                      tasks: items,
+                    });
+                    setItems([]);
+                    setTaskTitle("");
+                    setShowSpinner(false);
+                    setshowbox(false);
+                    setPopUpMsg(true);
+                    setTimeout(() => {
+                      setPopUpMsg(false);
+                    }, 3000);
+                  }else{
+                    seterrorMsg(true)
+                  }
+                }}
                 className="greenBtn"
               >
-                Submitt
+                {showSpinner ? (
+                  <Oval
+                    visible={true}
+                    height="20"
+                    width="20"
+                    color="#4fa94d"
+                    ariaLabel="oval-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                ) : (
+                  `Submitt`
+                )}
               </button>
+              {errorMsg ? <p> add at least one task</p> : ""}
+              
             </Modal>
           )}
+
+          <p
+            className="doneMessage"
+            style={{ right: showPopUpMsg ? "30px" : "100vh" }}
+          >
+            {" "}
+            tasks added successfully <i className="fa-solid fa-check"></i>
+          </p>
         </main>
 
         {/* Footer */}

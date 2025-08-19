@@ -165,7 +165,7 @@ button.add-new-task:focus {
   margin-bottom: 30px;
 }
 
-.home .add-task-modal div {
+.home .add-task-modal .input-field {
   width: 100%;
   text-align: left;
   padding: 0px 20px;
@@ -206,4 +206,33 @@ button.add-new-task:focus {
 }
 .home .tasks-table li:hover {
   scale: 1.1;
+}
+
+.home .task-added-succes{
+  position: fixed;
+  top:60px;
+  
+  background-color: white;
+  padding: 10px;
+  color:green;
+  border-radius: 10px;
+  transition: all .4s;
+}
+.home .task-added-succes .fa-check{
+  color: #3e993e;
+  
+}
+.home .doneMessage{
+  position: fixed;
+  top: 20px;
+  color: #1b8b1b;
+  background-color: white;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  transition: all .4s;
+}
+
+.home .doneMessage .fa-check{
+  color: #1b8b1b;
 }
