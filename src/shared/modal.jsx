@@ -2,7 +2,7 @@
 import { Helmet } from "react-helmet-async";
 import "./modal.css";
 
-const Modal = ({ children, setshowbox, title, modalclass }) => {
+const Modal = ({ children, setshowbox, title, modalclass ,setItems,setTaskTitle}) => {
   //close modal func
   const CloseModal = () => {
     setshowbox(false);
@@ -17,6 +17,8 @@ const Modal = ({ children, setshowbox, title, modalclass }) => {
           className="close"
           onClick={() => {
             CloseModal();
+            setItems([])
+            setTaskTitle("")
           }}
         >
           <i className="fa-solid fa-xmark"></i>

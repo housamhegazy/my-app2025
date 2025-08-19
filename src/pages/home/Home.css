@@ -199,14 +199,13 @@ button.add-new-task:focus {
 .home .tasks-table li {
   list-style: circle;
   margin: 10px;
-  background-color: #3d3a3a;
+  background-color: #b8b2b2;
   width: 100%;
   border-radius: 10px;
   transition: all 0.3s;
+  color:#333
 }
-.home .tasks-table li:hover {
-  scale: 1.1;
-}
+
 
 .home .task-added-succes{
   position: fixed;
@@ -235,4 +234,14 @@ button.add-new-task:focus {
 
 .home .doneMessage .fa-check{
   color: #1b8b1b;
+}
+.home .tasks-table .item { 
+      display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    align-items: center;
+}
+.home .tasks-table .item i{
+  cursor: pointer;
+  color: red;
 }

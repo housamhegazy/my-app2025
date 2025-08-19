@@ -10,9 +10,9 @@ import LoadingSpinner from "../loading/LoadingPage";
 import Error from "../../components/Error";
 import { sendEmailVerification } from "firebase/auth";
 import "./Home.css";
-import Modal from "../../shared/modal";
 import { doc, setDoc } from "firebase/firestore";
-import { Oval } from "react-loader-spinner";
+import HomeModal from "./HomeModal/HomeModal";
+import GetData from "./getData/GetData";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -23,25 +23,62 @@ const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
   const [showPopUpMsg, setPopUpMsg] = useState(false);
-  const [errorMsg,seterrorMsg] = useState(false)
+  const [errorMsg, seterrorMsg] = useState(false);
+
   useEffect(() => {
     {
       !user && !loading && navigate("/signin");
     }
   });
+  // modal functions
 
+  const setTitlefunc = (e) => {
+    setTaskTitle(e.target.value);
+  };
+  const setItemFunc = (e) => {
+    setInputValue(e.target.value);
+  };
   const handleAddItem = () => {
     // Check if the input value is not empty
     if (inputValue.trim() !== "") {
-      // Use the spread operator to create a new array
-      const newItems = [...items, inputValue];
-      setItems(newItems);
+      //check if the array include the item or not
+      if (!items.includes(inputValue)) {
+        // Use the spread operator to create a new array
+        const newItems = [...items, inputValue];
+        setItems(newItems);
+      }
       // Clear the input field
       setInputValue("");
-      if(items.length === 0 ){
-        seterrorMsg(false);
-      }
+      seterrorMsg(false);
     }
+  };
+
+  const AddItemsToDBfunc = async () => {
+    if (items.length > 0 && taskTitle) {
+      setShowSpinner(true);
+      const taskId = new Date().getTime();
+      await setDoc(doc(db, user.uid, `${taskId}`), {
+        title: taskTitle,
+        id: taskId,
+        tasks: items,
+        completed:false
+      });
+      setItems([]);
+      setTaskTitle("");
+      setShowSpinner(false);
+      setshowbox(false);
+      setPopUpMsg(true);
+      seterrorMsg(false);
+      setTimeout(() => {
+        setPopUpMsg(false);
+      }, 3000);
+    } else {
+      seterrorMsg(true);
+    }
+  };
+  const modalItemeDelete = (indexToDelete) => {
+    const newItems = items.filter((a, index) => index !== indexToDelete);
+    setItems(newItems);
   };
 
   if (loading) {
@@ -135,18 +172,7 @@ const Home = () => {
               </select>
             </div>
           </section>
-          <section className="tasks-section">
-            <article className="one-task" dir="auto">
-              <Link to="/edittask">
-                <h2>new task</h2>
-                <ul className="list">
-                  <li>start task</li>
-                  <li> finish task </li>
-                </ul>
-                <span className="time">one day ago</span>
-              </Link>
-            </article>
-          </section>
+          <GetData user={user}/>
           <section className="mttt">
             <button
               onClick={() => {
@@ -157,105 +183,31 @@ const Home = () => {
               Add New Task <i className="fa-plus fa-solid"></i>
             </button>
           </section>
+
           {/* show box modal  */}
           {showbox && (
-            <Modal
+            <HomeModal
               setshowbox={setshowbox}
-              title={"add new task"}
-              modalclass={"add-task-modal"}
-            >
-              <div className="input-field" style={{ textAlign: "left" }}>
-                {/* add title  */}
-                <input
-                  value={taskTitle}
-                  onChange={(e) => {
-                    setTaskTitle(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="title"
-                />
-              </div>
-              <div className="input-field" style={{ textAlign: "left" }}>
-                <input
-                  onChange={(e) => {
-                    setInputValue(e.target.value);
-                  }}
-                  value={inputValue}
-                  type="text"
-                  placeholder="details"
-                />
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleAddItem();
-                    
-                  }}
-                  className="greenBtn"
-                >
-                  Add
-                </button>
-              </div>
-              {/* tasks table  */}
-              {items && (
-                <ul className="tasks-table">
-                  {items.map((a, index) => {
-                    return <li key={index}>{a}</li>;
-                  })}
-                </ul>
-              )}
-
-              <button
-                onClick={async (e) => {
-                  e.preventDefault();
-                  // Add a new document in collection "user.uid"
-                  if (items.length > 0) {
-                    setShowSpinner(true);
-                    const taskId = new Date().getTime();
-                    await setDoc(doc(db, user.uid, `${taskId}`), {
-                      title: taskTitle,
-                      id: taskId,
-                      tasks: items,
-                    });
-                    setItems([]);
-                    setTaskTitle("");
-                    setShowSpinner(false);
-                    setshowbox(false);
-                    setPopUpMsg(true);
-                    setTimeout(() => {
-                      setPopUpMsg(false);
-                    }, 3000);
-                  }else{
-                    seterrorMsg(true)
-                  }
-                }}
-                className="greenBtn"
-              >
-                {showSpinner ? (
-                  <Oval
-                    visible={true}
-                    height="20"
-                    width="20"
-                    color="#4fa94d"
-                    ariaLabel="oval-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                  />
-                ) : (
-                  `Submitt`
-                )}
-              </button>
-              {errorMsg ? <p> add at least one task</p> : ""}
-              
-            </Modal>
+              taskTitle={taskTitle}
+              setTitlefunc={setTitlefunc}
+              setItemFunc={setItemFunc}
+              inputValue={inputValue}
+              items={items}
+              AddItemsToDBfunc={AddItemsToDBfunc}
+              handleAddItem={handleAddItem}
+              modalItemeDelete={modalItemeDelete}
+              errorMsg={errorMsg}
+              showSpinner={showSpinner} setTaskTitle={setTaskTitle} setItems={setItems}            />
           )}
 
           <p
             className="doneMessage"
-            style={{ right: showPopUpMsg ? "30px" : "100vh" }}
+            style={{ right: showPopUpMsg ? "30px" : "100vw" }}
           >
             {" "}
             tasks added successfully <i className="fa-solid fa-check"></i>
           </p>
+          
         </main>
 
         {/* Footer */}
