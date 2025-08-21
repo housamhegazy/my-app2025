@@ -12,13 +12,16 @@ const GetData = ({ user }) => {
   if (loading) {
     return <LoadingSpinner />;
   }
-
-  return (
+  if(error){
+    return(<main>{error.message}</main>)
+  }
+  if(value){
+    return (
     <section className="tasks-section">
       {value.docs.map((item, index) => {
         return (
           <article key={index} className="one-task" dir="auto">
-            <Link to="/edittask">
+            <Link to={`/edittask/${item.data().id}`}>
               <h2>{item.data().title}</h2>
               <ul className="list">
                 {item.data().tasks.map((task, index) => {
@@ -40,6 +43,7 @@ const GetData = ({ user }) => {
       })}
     </section>
   );
+  }
 };
 
 export default GetData;

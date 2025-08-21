@@ -10,6 +10,7 @@ import Signup from "./pages/signup/Signup.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import ErrorPage from "./pages/error/ErrorPage.jsx";
 import EditTask from "./pages/edit tasks/EditTask.jsx";
+
 let router = createBrowserRouter([
   {
     path: "/",
@@ -20,7 +21,7 @@ let router = createBrowserRouter([
     element: <Html />,
   },
   {
-    path: "/edittask",
+    path: "/edittask/:id",
     element: <EditTask />,
   },
   {

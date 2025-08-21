@@ -3,15 +3,20 @@ import "./EditTask.css";
 import Header from "../../components/Header.jsx";
 import Footer from "../../components/Footer.jsx";
 import { Helmet } from "react-helmet-async";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/config";
 import LoadingSpinner from "../loading/LoadingPage";
 import Error from "../../components/Error";
+import TitleSection from "./TitleSection";
+import SubTasksSection from "./subTasksSection";
+import BtnsSection from "./BtnsSection";
 const EditTask = () => {
+
+  
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-
+let {id} = useParams();
   useEffect(() => {
     if (!user && !loading) {
       navigate("/signin");
@@ -29,6 +34,9 @@ const EditTask = () => {
         <LoadingSpinner />
       </>
     );
+  }
+  if (error) {
+    return <main><div>{error.message}</div></main>;
   }
   if (!user) {
     return (
@@ -53,6 +61,7 @@ const EditTask = () => {
       </>
     );
   }
+  
   if (user) {
     if (user.emailVerified) {
       return (
@@ -65,53 +74,10 @@ const EditTask = () => {
           <Header />
           <div className="edit-task">
             {/* title  */}
-            <section className="title center">
-              <h1>
-                <input
-                  className="title-input center"
-                  value="housam hegazy"
-                  type="text"
-                  placeholder="hello"
-                />
-                <i className="fa-solid fa-pen-to-square"></i>
-              </h1>
-            </section>
+            <TitleSection user={user} id={id}/>
             {/* sub-tasks-section */}
-            <section className="sub-task">
-              <div className="first-box flex">
-                <p className="time">created : 6 days ago </p>
-                {/* <div className="custom-checkbox">
-                  <input type="checkbox" name="" id="checkbox" />
-                  <label htmlFor="checkbox">completed</label>
-                </div> */}
-                <label className="custom-checkbox">
-                  <input type="checkbox" />
-                  <span className="checkmark"></span>
-                  completed
-                </label>
-              </div>
-              <ul>
-                <li className="card-task">
-                  <p className="card-name">card</p>
-                  <i className="fa-solid fa-trash"></i>
-                </li>
-                <li className="card-task">
-                  <p className="card-name">card</p>
-                  <i className="fa-solid fa-trash"></i>
-                </li>
-                <li className="card-task">
-                  <p className="card-name">card</p>
-                  <i className="fa-solid fa-trash"></i>
-                </li>
-                
-              </ul>
-            </section>
-            <section className="center mt flex" style={{flexDirection:"column"}}>
-                  <button className="add-more-btn" >
-                    Add More  <i className="fa-solid fa-plus"></i>
-                  </button>
-                  <button className="delete mtt">Delete Task </button>
-            </section>
+            <SubTasksSection user={user} id={id}/>
+            <BtnsSection user={user} id={id}/>
             {/* Add more Btn & Delete Btn  */}
           </div>
           <Footer />
@@ -119,9 +85,7 @@ const EditTask = () => {
       );
     }
   }
-  if (error) {
-    return <Error />;
-  }
+  
 };
 
 export default EditTask;

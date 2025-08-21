@@ -35,18 +35,18 @@
   cursor: pointer;
   transition: 0.2s;
 }
-.fa-pen-to-square:hover {
+.light .fa-pen-to-square {
+  color: #000;
+}
+.edit-task .fa-pen-to-square:hover {
   font-size: 20px;
 }
 /* ################################# */
 /* sub task section  */
 /* ################################# */
 .edit-task section.sub-task {
-  border: 2px solid red;
   max-width: 600px;
   margin: 50px auto;
-  max-height: 400px;
-  
 }
 .edit-task .sub-task .first-box {
   justify-content: space-between;
@@ -55,10 +55,12 @@
 .edit-task .sub-task .first-box .time {
   font-size: 12px;
 }
-
+.light .edit-task .sub-task .first-box .time {
+  color: #333;
+}
 /* check box  */
 /* Container */
-.custom-checkbox {
+.edit-task .custom-checkbox {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -67,16 +69,18 @@
 }
 
 /* Hide the browser's default checkbox */
-.custom-checkbox input {
+.edit-task .custom-checkbox input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
 }
-
+.light .sub-task .custom-checkbox {
+  color: #333;
+}
 /* Create a custom checkbox */
-.checkmark {
+.edit-task .checkmark {
   position: relative;
   height: 25px;
   width: 25px;
@@ -88,29 +92,29 @@
 }
 
 /* On mouse-over, add a grey background color */
-.custom-checkbox:hover .checkmark {
+.edit-task .custom-checkbox:hover .checkmark {
   background-color: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.custom-checkbox input:checked ~ .checkmark {
+.edit-task .custom-checkbox input:checked ~ .checkmark {
   background-color: #007bff; /* لون الخلفية عند التفعيل */
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
+.edit-task .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
 /* Show the checkmark when checked */
-.custom-checkbox input:checked ~ .checkmark:after {
+.edit-task .custom-checkbox input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.custom-checkbox .checkmark:after {
+.edit-task .custom-checkbox .checkmark:after {
   left: 9px;
   top: 5px;
   width: 5px;
@@ -130,29 +134,62 @@
   padding: 0px 5px;
   border-radius: 10px;
 }
-.sub-task .card-task i{
-  color:red;
+
+.sub-task .card-task i {
+  color: red;
   cursor: pointer;
-  transition: all .3s;
+  transition: all 0.3s;
 }
-.sub-task .card-task i:hover{
+.sub-task .card-task i:hover {
   transform: scale(1.1);
 }
-.sub-task .card-task .card-name{
-  margin: 20px!important;
+.sub-task .card-task .card-name {
+  margin: 20px !important;
 }
-.light .sub-task .card-task .card-name{
-  color:black;
+.light .sub-task .card-task .card-name {
+  color: black;
 }
 .sub-task .card-task:hover {
   box-shadow: 0px 6px 14px 2px gray;
 }
 /* add more btn and delete btn  */
 
-.add-more-btn{
+.add-more-btn {
   background-color: green;
   border-color: green;
 }
-.add-more-btn:hover{
+.add-more-btn:hover {
   border-color: green;
+}
+section.btns{
+  max-width: 600px;
+  margin: 0 auto;
+}
+section.btns .add-task {
+  box-shadow: 1px 3px 5px 3px gray;
+  margin: 20px 10px;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 5px;
+  border-radius: 10px;
+  width: 100%;
+  padding: 5px;
+}
+.btns .input-field {
+  padding: 10px 5px;
+  border: none;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: transparent;
+  outline: none;
+  font-size: 16px;
+  color: white;
+  transition: all 0.3s ease;
+}
+.light .btns .input-field {
+  color: #000;
+  border-color: #685959;
+
 }

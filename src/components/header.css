@@ -140,10 +140,6 @@ li a {
     right: 10px;
   }
 
-  input {
-    display: none;
-  }
-
   .fa-bars {
     font-size: 30px;
     transform: scaleX(1.4);

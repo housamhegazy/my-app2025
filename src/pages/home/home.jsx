@@ -88,7 +88,9 @@ const Home = () => {
       </>
     );
   }
-
+if (error) {
+    return <main>{error.message}</main>;
+  }
   if (!user) {
     return (
       <>
@@ -215,9 +217,7 @@ const Home = () => {
       </>
     );
   }
-  if (error) {
-    return <Error />;
-  }
+  
 };
 
 export default Home;
