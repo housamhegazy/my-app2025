@@ -1,31 +1,28 @@
 import { formatDistanceToNow } from "date-fns";
 import { db } from "../../firebase/config";
-import {
-  doc,
-  updateDoc,
-  arrayRemove,
-} from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { enUS } from "date-fns/locale";
+import { Oval } from "react-loader-spinner";
 
-const SubTasksSection = ({ user, id }) => {
+const SubTasksSection = ({ user, id, handleRemoveFun, updateDataFunc }) => {
   const [value, loading, error] = useDocument(doc(db, user.uid, id));
-
-  //remove item from an array
-  const handleRemoveFun = async (item) => {
-    await updateDoc(doc(db, user.uid, id), {
-      tasks: arrayRemove(item),
-    });
-  };
-
-  let updateDataFunc = async () => {
-    await updateDoc(doc(db, user.uid, id), {
-      completed: value.data().completed == true ? false : true,
-    });
-  };
-
+  const updateTaskFunc = () => {};
   if (loading) {
-    return <div> loading .... </div>;
+    return (
+      <div style={{ margin: "100px auto", width: "100px" }}>
+        {" "}
+        <Oval
+          visible={true}
+          height="20"
+          width="20"
+          color="#c9d4c9ff"
+          ariaLabel="oval-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />{" "}
+      </div>
+    );
   }
 
   if (error) {
@@ -44,8 +41,8 @@ const SubTasksSection = ({ user, id }) => {
           </p>
           <label className="custom-checkbox">
             <input
-              onChange={() => {
-                updateDataFunc();
+              onChange={(e) => {
+                updateDataFunc(e);
               }}
               checked={value.data().completed}
               type="checkbox"
@@ -59,12 +56,20 @@ const SubTasksSection = ({ user, id }) => {
             return (
               <li key={index} className="card-task">
                 <p className="card-name">{item}</p>
-                <i
-                  onClick={() => {
-                    handleRemoveFun(item);
-                  }}
-                  className="fa-solid fa-trash"
-                ></i>
+                <div>
+                  <i
+                    onClick={() => {
+                      updateTaskFunc();
+                    }}
+                    className="fa-solid fa-pen"
+                  ></i>
+                  <i
+                    onClick={() => {
+                      handleRemoveFun(item);
+                    }}
+                    className="fa-solid fa-trash"
+                  ></i>
+                </div>
               </li>
             );
           })}

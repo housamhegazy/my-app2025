@@ -1,22 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./EditTask.css";
 import Header from "../../components/Header.jsx";
 import Footer from "../../components/Footer.jsx";
 import { Helmet } from "react-helmet-async";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
 import LoadingSpinner from "../loading/LoadingPage";
-import Error from "../../components/Error";
 import TitleSection from "./TitleSection";
 import SubTasksSection from "./subTasksSection";
 import BtnsSection from "./BtnsSection";
-const EditTask = () => {
 
-  
+import {
+  arrayRemove,
+  arrayUnion,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+const EditTask = () => {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-let {id} = useParams();
+
+  // ###############################
+  //usestate for Btn Section
+  // ###############################
+  const [inputValue, setInputValue] = useState("");
+  const [showData , setShowData] = useState(false)
+
+  let { id } = useParams();
   useEffect(() => {
     if (!user && !loading) {
       navigate("/signin");
@@ -27,6 +39,60 @@ let {id} = useParams();
       }
     }
   });
+  // ###############################
+  //start title section functions
+  // ###############################
+
+  const updateTitleFunc = async (e) => {
+    await updateDoc(doc(db, user.uid, id), {
+      title: e.target.value,
+    });
+  };
+  // ###############################
+  //start subtask section functions
+  // ###############################
+
+  //remove item from an array
+  const handleRemoveFun = async (item) => {
+    await updateDoc(doc(db, user.uid, id), {
+      tasks: arrayRemove(item),
+    });
+  };
+  const updateDataFunc = async (e) => {
+    if (e.target.checked) {
+      await updateDoc(doc(db, user.uid, id), {
+        completed: true,
+      });
+    } else {
+      await updateDoc(doc(db, user.uid, id), {
+        completed: false,
+      });
+    }
+  };
+  // ###############################
+  //start btns section
+  // ###############################
+
+  //add input value to
+  const addInputValue = (e) => {
+    setInputValue(e.target.value);
+  };
+  //add new task to firestore
+  const addTaskFunc = async (inputValue) => {
+    if (inputValue.trim() !== "") {
+      setInputValue("");
+      await updateDoc(doc(db, user.uid, id), {
+        tasks: arrayUnion(inputValue),
+      });
+    }
+  };
+  //remove task
+  const RemoveTaskFunc = async () => {
+    //حتى لايحدث خطأ اثناء حذف التاسك 
+    setShowData(true)
+    await deleteDoc(doc(db, user.uid, id));
+    navigate("/",{replace:true});
+  };
 
   if (loading) {
     return (
@@ -36,7 +102,11 @@ let {id} = useParams();
     );
   }
   if (error) {
-    return <main><div>{error.message}</div></main>;
+    return (
+      <main>
+        <div>{error.message}</div>
+      </main>
+    );
   }
   if (!user) {
     return (
@@ -61,7 +131,7 @@ let {id} = useParams();
       </>
     );
   }
-  
+
   if (user) {
     if (user.emailVerified) {
       return (
@@ -72,20 +142,38 @@ let {id} = useParams();
             <title>Edit Task</title>
           </Helmet>
           <Header />
+          {showData ? <main><LoadingSpinner/></main>: 
           <div className="edit-task">
             {/* title  */}
-            <TitleSection user={user} id={id}/>
+            <TitleSection
+              updateTitleFunc={updateTitleFunc}
+              user={user}
+              id={id}
+            />
             {/* sub-tasks-section */}
-            <SubTasksSection user={user} id={id}/>
-            <BtnsSection user={user} id={id}/>
+            <SubTasksSection
+              user={user}
+              id={id}
+              handleRemoveFun={handleRemoveFun}
+              updateDataFunc={updateDataFunc}
+            />
+            <BtnsSection
+              user={user}
+              id={id}
+              addInputValue={addInputValue}
+              addTaskFunc={addTaskFunc}
+              RemoveTaskFunc={RemoveTaskFunc}
+              inputValue={inputValue}
+            />
             {/* Add more Btn & Delete Btn  */}
           </div>
+          }
+          
           <Footer />
         </>
       );
     }
   }
-  
 };
 
 export default EditTask;

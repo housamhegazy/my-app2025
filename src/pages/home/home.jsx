@@ -5,9 +5,8 @@ import { Helmet } from "react-helmet-async";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase/config";
 import { useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../loading/LoadingPage";
-import Error from "../../components/Error";
 import { sendEmailVerification } from "firebase/auth";
 import "./Home.css";
 import { doc, setDoc } from "firebase/firestore";
@@ -30,8 +29,8 @@ const Home = () => {
       !user && !loading && navigate("/signin");
     }
   });
-  // modal functions
 
+  // modal functions
   const setTitlefunc = (e) => {
     setTaskTitle(e.target.value);
   };
@@ -61,7 +60,7 @@ const Home = () => {
         title: taskTitle,
         id: taskId,
         tasks: items,
-        completed:false
+        completed: false,
       });
       setItems([]);
       setTaskTitle("");
@@ -81,6 +80,8 @@ const Home = () => {
     setItems(newItems);
   };
 
+  // completed and incompleted functions
+
   if (loading) {
     return (
       <>
@@ -88,7 +89,7 @@ const Home = () => {
       </>
     );
   }
-if (error) {
+  if (error) {
     return <main>{error.message}</main>;
   }
   if (!user) {
@@ -162,19 +163,7 @@ if (error) {
 
         <Header />
         <main className="home">
-          <section className="parent-of-btns mttt">
-            <button className="orderbtn">Newest First</button>
-            <button className="orderbtn">Oldest First</button>
-
-            <div className="custom-select-wrapper">
-              <select name="cars" id="cars-select">
-                <option value="">All Tasks</option>
-                <option value="volvo">Completed</option>
-                <option value="saab">Incompleted</option>
-              </select>
-            </div>
-          </section>
-          <GetData user={user}/>
+          <GetData user={user} />
           <section className="mttt">
             <button
               onClick={() => {
@@ -199,7 +188,10 @@ if (error) {
               handleAddItem={handleAddItem}
               modalItemeDelete={modalItemeDelete}
               errorMsg={errorMsg}
-              showSpinner={showSpinner} setTaskTitle={setTaskTitle} setItems={setItems}            />
+              showSpinner={showSpinner}
+              setTaskTitle={setTaskTitle}
+              setItems={setItems}
+            />
           )}
 
           <p
@@ -209,7 +201,6 @@ if (error) {
             {" "}
             tasks added successfully <i className="fa-solid fa-check"></i>
           </p>
-          
         </main>
 
         {/* Footer */}
@@ -217,7 +208,6 @@ if (error) {
       </>
     );
   }
-  
 };
 
 export default Home;

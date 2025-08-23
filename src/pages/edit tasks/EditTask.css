@@ -1,7 +1,7 @@
 /* title  */
 
 .edit-task {
-  height: calc(100vh - 128.64px);
+  min-height: calc(100vh - 128.64px);
 }
 
 .edit-task .title-input {
@@ -15,6 +15,7 @@
   transition: border-color 0.3s ease-in-out; /* حركة ناعمة عند تغير اللون */
   font-weight: bold;
   font-size: 20px;
+  text-decoration:line-through;
 }
 .dark .edit-task .title-input {
   color: white;
@@ -135,11 +136,15 @@
   border-radius: 10px;
 }
 
-.sub-task .card-task i {
-  color: red;
+.sub-task .card-task .fa-trash ,.edit-task .sub-task .fa-pen{
+  margin: 5px;
   cursor: pointer;
   transition: all 0.3s;
 }
+.sub-task .card-task .fa-trash{
+  color: red;
+}
+
 .sub-task .card-task i:hover {
   transform: scale(1.1);
 }
@@ -152,13 +157,19 @@
 .sub-task .card-task:hover {
   box-shadow: 0px 6px 14px 2px gray;
 }
-/* add more btn and delete btn  */
 
-.add-more-btn {
+.edit-task .sub-task .fa-pen{
+  color:green
+}
+/* ################################## */
+/* add more btn and delete btn  */
+/* ################################## */
+
+.btns .add-more-btn {
   background-color: green;
   border-color: green;
 }
-.add-more-btn:hover {
+.btns .add-more-btn:hover {
   border-color: green;
 }
 section.btns{
@@ -176,6 +187,9 @@ section.btns .add-task {
   border-radius: 10px;
   width: 100%;
   padding: 5px;
+    animation-name: fadeIn;
+  animation-duration: 2s; /* The duration of the animation */
+  animation-fill-mode: forwards; 
 }
 .btns .input-field {
   padding: 10px 5px;
@@ -192,4 +206,23 @@ section.btns .add-task {
   color: #000;
   border-color: #685959;
 
+}
+
+.edit-task .btns .fa-xmark{
+  color: red;
+  cursor:pointer;
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+/* Define the animation */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
