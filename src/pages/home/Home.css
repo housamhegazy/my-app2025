@@ -7,7 +7,15 @@
 .home {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  justify-content: space-between;
 }
+ .home .getData{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+ }
 /* الحاوية المخصصة للقائمة */
 .custom-select-wrapper {
   position: relative;

@@ -1,6 +1,7 @@
 .profile  {
   display: flex;
   flex-direction: column;
+  justify-content: space-around
 }
 .profile ul {
   display: flex;

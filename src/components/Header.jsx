@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./header.css";
 import "../theme.css";
@@ -6,13 +6,38 @@ import ThemeContexttt from "../context/themeContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/config";
 import { signOut } from "firebase/auth";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
   const { theme, changeTheme } = useContext(ThemeContexttt);
+  const [showLangs, setShowLangs] = useState(false);
+  const dropdownRef = useRef(null);
+  const { t, i18n } = useTranslation();
+  useEffect(() => {
+    // دالة للتحقق من النقر خارج القائمة
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowLangs(false); // إذا كان النقر خارجها، أغلق القائمة
+      }
+    }
+
+    // إضافة مستمع لحدث 'mousedown' على كامل النافذة
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // 4. إزالة المستمع عند إلغاء تحميل المكون
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]); // أعد تشغيل التأثير عند تغير المرجع
+
+  const handleOpenMenu = () => {
+    setShowLangs(!showLangs);
+  };
+
   return (
     <>
-      <header className="hide-when-mobile">
+      <header className=" hide-when-mobile">
         <h1 className="logo">
           {" "}
           <NavLink to="/">Courses 4 Arab</NavLink>{" "}
@@ -28,13 +53,53 @@ const Header = () => {
         </button>
 
         <ul className="flex">
+          <li className="main-list">
+            <p onClick={handleOpenMenu} className="lang">
+              {t("lang")} 
+            </p>
+            {showLangs && (
+              <ul ref={dropdownRef} className="lang-box">
+                <li
+                  onClick={() => {
+                    i18n.changeLanguage("ar");
+                  }}
+                >
+                  العربيه{" "}
+                  {i18n.language == "ar" && (
+                    <i className="fa-solid fa-check"></i>
+                  )}{" "}
+                </li>
+                <li
+                  onClick={() => {
+                    i18n.changeLanguage("en");
+                  }}
+                >
+                  English{" "}
+                  {i18n.language == "en" && (
+                    <i className="fa-solid fa-check"></i>
+                  )}
+                </li>
+                <li
+                  onClick={() => {
+                    i18n.changeLanguage("fr");
+                  }}
+                >
+                  French{" "}
+                  {i18n.language == "fr" && (
+                    <i className="fa-solid fa-check"></i>
+                  )}
+                </li>
+              </ul>
+            )}
+          </li>
+
           {!user && (
             <>
               <li className="main-list">
-                <NavLink to="/signin"> SignIn</NavLink>
+                <NavLink to="/signin"> {t("signin")} </NavLink>
               </li>
               <li className="main-list">
-                <NavLink to="/signup"> SignUp</NavLink>
+                <NavLink to="/signup"> {t("signup")} </NavLink>
               </li>
             </>
           )}
@@ -46,7 +111,7 @@ const Header = () => {
                   HTML
                 </NavLink>
               </li>
-              
+
               <li className="main-list">
                 <NavLink className="main-link" to="/javascript">
                   JavaScript
@@ -66,12 +131,12 @@ const Header = () => {
                   }}
                   className="main-link"
                 >
-                  Sign Out
+                  {t("signout")}
                 </button>
               </li>
               <li className="main-list">
                 {/* sign out  */}
-                <NavLink to={"/profile"}>Profile  </NavLink>
+                <NavLink to={"/profile"}>{t("profile")} </NavLink>
               </li>
             </>
           )}
@@ -79,7 +144,7 @@ const Header = () => {
       </header>
 
       {/* Header for mobile (hidden on desktop) */}
-      <header className="show-when-mobile">
+      {/* <header className="show-when-mobile">
         <h1>
           {" "}
           <NavLink href="/">Courses 4 Arab</NavLink>{" "}
@@ -152,7 +217,7 @@ const Header = () => {
             </ul>
           </div>
         </div>
-      </header>
+      </header> */}
     </>
   );
 };

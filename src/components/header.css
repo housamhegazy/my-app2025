@@ -222,3 +222,38 @@ li a {
     font-size: 17px;
   }
 }
+
+/* //start lang  */
+header .lang {
+  background-color: green;
+  width: 130px;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 15px 0px;
+  margin: 0;
+  cursor: pointer;
+}
+header .lang-box{
+  position: absolute;
+  top: 80%;
+  right: 20px;
+  background-color: green;
+  color: antiquewhite;
+  padding: 10px;
+  border-radius: 10px;
+  width: 130px;
+  z-index: 100;
+
+}
+header .lang-box li{
+  margin-bottom: 15px;
+  padding: 5px;
+  background-color: rgb(86, 156, 98);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .3s;
+  font-size: 15px;
+}
+header .lang-box li:hover{
+  scale: 1.1;
+}

@@ -42,20 +42,17 @@ const GetData = ({ user }) => {
     return <main>{error.message}</main>;
   }
   if (value) {
-    if (value.docs.length == 0) {
-      return (
-        <section
-          style={{ height: "400px", lineHeight: "400px", fontSize: "20px" }}
-        >
-          You Successfully Finished All Tasks , press{" "}
-          <span style={{ color: "green", fontSize: "20px" }}>
-            "Add New Task Button "
-          </span>
-        </section>
-      );
-    }
+    // if (value.docs.length == 0) {
+    //   return (
+    //     <section
+    //       style={{ height: "400px", lineHeight: "400px", fontSize: "20px" }}
+    //     >
+    //       No Tasks
+    //     </section>
+    //   );
+    // }
     return (
-      <div>
+      <div className="getData">
         <section className="parent-of-btns mttt">
           <button
             style={{ opacity: isFullOpacity ? "1" : ".3" }}
@@ -98,35 +95,39 @@ const GetData = ({ user }) => {
           </div>
         </section>
         <section className="tasks-section">
-          {value.docs.map((item, index) => {
-            return (
-              <Link key={index} to={`/edittask/${item.data().id}`}>
-                <article
-                  className="one-task"
-                  dir="auto"
-                  style={{ height: "100%" }}
-                >
-                  <h2>{item.data().title}</h2>
-                  <ul className="list">
-                    {item.data().tasks.map((task, index) => {
-                      if (index < 2) {
-                        return <li key={index}>{task} </li>;
-                      } else {
-                        return;
-                      }
-                    })}
-                  </ul>
-                  <span className="time">
-                    Created :{" "}
-                    {formatDistanceToNow(item.data().id, {
-                      addSuffix: true,
-                      locale: enUS,
-                    })}
-                  </span>
-                </article>
-              </Link>
-            );
-          })}
+          {value.docs.length == 0 ? (
+            <section>no data</section>
+          ) : (
+            value.docs.map((item, index) => {
+              return (
+                <Link key={index} to={`/edittask/${item.data().id}`}>
+                  <article
+                    className="one-task"
+                    dir="auto"
+                    style={{ height: "100%" }}
+                  >
+                    <h2>{item.data().title}</h2>
+                    <ul className="list">
+                      {item.data().tasks.map((task, index) => {
+                        if (index < 2) {
+                          return <li key={index}>{task} </li>;
+                        } else {
+                          return;
+                        }
+                      })}
+                    </ul>
+                    <span className="time">
+                      Created :{" "}
+                      {formatDistanceToNow(item.data().id, {
+                        addSuffix: true,
+                        locale: enUS,
+                      })}
+                    </span>
+                  </article>
+                </Link>
+              );
+            })
+          )}
         </section>
       </div>
     );
